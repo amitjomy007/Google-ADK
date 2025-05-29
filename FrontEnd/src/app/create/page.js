@@ -8,7 +8,7 @@ export default function Page() {
 
   const runPrompt = async () => {
     console.log("Button cliekc");
-    fetch('/runPrompt', {
+    fetch("http://localhost:8000/runPrompt/", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
