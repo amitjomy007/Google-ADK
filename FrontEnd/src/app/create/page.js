@@ -6,9 +6,10 @@ export default function Page() {
   const [output, setOutput] = useState("");
   //function to fetch output from the api
 
-  const runPrompt = async () => {
-    console.log("Button cliekc");
-    fetch("http://localhost:8000/runPrompt/", {
+const runPrompt = async () => {
+  console.log("Button cliekc");
+  try {
+    const response = await fetch("http://localhost:8000/runPrompt/", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -16,14 +17,20 @@ export default function Page() {
       body: JSON.stringify({
         prompt: prompt,
       })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-    )
-  .then(res => res.json())
-  .then(data => {
-    console.log(data)
+    
+    const data = await response.json();
+    console.log(data);
     setOutput(data);
-  });
+  } catch (error) {
+    console.error('Error:', error);
+    
   }
+}
 
   return (
     <div className="flex flex-row">
